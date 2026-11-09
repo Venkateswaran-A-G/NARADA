@@ -1,1 +1,3 @@
-This is a test document.
+LangGraph connects steps in an agent workflow.
+Qdrant stores vectors and finds similar information.
+Ollama runs language models on a local computer.
