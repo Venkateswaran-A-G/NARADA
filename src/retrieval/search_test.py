@@ -9,17 +9,30 @@ embedding= encoder.encode(lines)
 print("Number of Lines: ",embedding.shape[0])
 print("Vector Size: ",embedding.shape[1])
 
-client.upsert(
+for i,line in enumerate(lines):
+    client.upsert(
     collection_name="narada_docs",
     points=[
         PointStruct(
-            id = 1,
-            vector=embedding[0].tolist(),
+            id = i,
+            vector=embedding[i].tolist(),
             payload={
-                "text":lines[0]
+                "text":line
             }
         )
     ]
 )
 collection = client.get_collection("narada_docs")
 print("Points Count: ",collection.points_count)
+
+question = "Which tool stores vectors and finds similar information?"
+query = encoder.encode(question).tolist()
+result = client.query_points(
+    collection_name="narada_docs",
+    query=query,
+    limit=1,
+    with_payload=True
+)
+point = result.points[0]
+print("Text:", point.payload["text"])
+print("Score:", point.score)
