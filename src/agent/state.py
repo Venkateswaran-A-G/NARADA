@@ -6,3 +6,5 @@ class State(TypedDict):
     question:str
     answer:NotRequired[str]
     model_name:NotRequired[str]
+    use_retrieval: NotRequired[bool]
+    document_path: NotRequired[str]
